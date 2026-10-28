@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+  <title id="title">KDA — Khawar Danish Academy</title>
+  <desc id="desc">An open book beneath a rising sun, with the KDA wordmark.</desc>
+  <rect x="4" y="4" width="232" height="232" rx="54" fill="#112f43"/>
+  <rect x="14" y="14" width="212" height="212" rx="45" fill="none" stroke="#d7b978" stroke-opacity=".5"/>
+  <path d="M95 77a25 25 0 0 1 50 0" fill="none" stroke="#e6c788" stroke-width="7"/>
+  <path d="M120 34v8m-33 3 5 7m61-7-5 7M73 67l8 3m86-3-8 3" fill="none" stroke="#e6c788" stroke-width="5" stroke-linecap="round"/>
+  <path d="M120 105C100 88 78 84 52 88v53c27-4 48 0 68 16V105Z" fill="#e7f4ef"/>
+  <path d="M120 105c20-17 42-21 68-17v53c-27-4-48 0-68 16V105Z" fill="#62c5b6"/>
+  <path d="M120 105v52m-53-53c14 0 25 3 36 9m-36 8c14 0 25 3 36 9m70-26c-14 0-25 3-36 9m36 8c-14 0-25 3-36 9" fill="none" stroke="#112f43" stroke-width="4" stroke-linecap="round"/>
+  <path d="M46 149c28-4 52 0 74 16 22-16 46-20 74-16" fill="none" stroke="#e6c788" stroke-width="4" stroke-linecap="round"/>
+  <text x="123" y="205" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="38" font-weight="700" letter-spacing="7" fill="#ffffff">KDA</text>
+</svg>

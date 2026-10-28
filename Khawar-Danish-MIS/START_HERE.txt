@@ -1,0 +1,10 @@
+Read README.md first.
+Dari installation: docs/INSTALLATION_FA.md
+English installation: docs/INSTALLATION_EN.md
+User handbook: docs/USER_GUIDE_DARI.html (download and open in a browser)
+Administrator handbook: docs/ADMIN_GUIDE_DARI.html
+GitHub upload instructions: docs/PUBLISHING_FA.md
+
+Expose ONLY public/ through Apache. Keep config/ and storage/ private.
+For an existing installation, back up first and follow the upgrade section.
+Do not run install, demo or reset commands on an existing database unless that action is intended.

@@ -1,0 +1,12 @@
+KDA offline interface fonts
+
+Vazirmatn variable font (Dari/Persian)
+https://github.com/google/fonts/tree/main/ofl/vazirmatn
+License: licenses/Vazirmatn-OFL.txt
+
+Inter variable font (Latin/English)
+https://github.com/google/fonts/tree/main/ofl/inter
+License: licenses/Inter-OFL.txt
+
+The original variable TTFs and locally converted WOFF2 files are bundled in public/assets/fonts.
+No font service, CDN, external stylesheet or internet connection is needed at runtime.

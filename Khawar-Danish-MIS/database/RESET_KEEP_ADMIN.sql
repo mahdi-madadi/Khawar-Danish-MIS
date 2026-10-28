@@ -1,0 +1,58 @@
+-- ONLY AFTER installing the employee schema. Select the khawar_danish database in phpMyAdmin.
+-- Export a backup first. Keeps the oldest active Administrator account, password and photo.
+-- Deletes other business data and users; restores default roles/settings and one empty cash account.
+-- No DROP, TRUNCATE, password reset or disabling of foreign-key checks.
+START TRANSACTION;
+SELECT version FROM schema_versions WHERE version=1 FOR UPDATE;
+SET @primary_admin := (SELECT MIN(id) FROM users WHERE role_id=1 AND active=1);
+UPDATE users SET employee_id=NULL, teacher_id=NULL, auth_version=auth_version+1 WHERE id=@primary_admin;
+DELETE FROM users WHERE @primary_admin IS NOT NULL AND id<>@primary_admin;
+DELETE FROM employee_payroll_payments WHERE @primary_admin IS NOT NULL;
+DELETE FROM employee_payroll WHERE @primary_admin IS NOT NULL;
+DELETE FROM certificates WHERE @primary_admin IS NOT NULL;
+DELETE FROM marks WHERE @primary_admin IS NOT NULL;
+DELETE FROM assessments WHERE @primary_admin IS NOT NULL;
+DELETE FROM reconciliations WHERE @primary_admin IS NOT NULL;
+DELETE FROM movements WHERE @primary_admin IS NOT NULL ORDER BY id DESC;
+DELETE FROM payroll_payments WHERE @primary_admin IS NOT NULL;
+DELETE FROM payroll_sources WHERE @primary_admin IS NOT NULL;
+DELETE FROM payroll WHERE @primary_admin IS NOT NULL;
+DELETE FROM agreements WHERE @primary_admin IS NOT NULL;
+DELETE FROM refunds WHERE @primary_admin IS NOT NULL;
+DELETE FROM allocations WHERE @primary_admin IS NOT NULL;
+DELETE FROM receipts WHERE @primary_admin IS NOT NULL;
+DELETE FROM credits WHERE @primary_admin IS NOT NULL;
+DELETE FROM charges WHERE @primary_admin IS NOT NULL;
+DELETE FROM attendance WHERE @primary_admin IS NOT NULL;
+DELETE FROM holidays WHERE @primary_admin IS NOT NULL;
+DELETE FROM timetable WHERE @primary_admin IS NOT NULL;
+DELETE FROM enrollments WHERE @primary_admin IS NOT NULL;
+DELETE FROM students WHERE @primary_admin IS NOT NULL;
+DELETE FROM class_subjects WHERE @primary_admin IS NOT NULL;
+DELETE FROM batches WHERE @primary_admin IS NOT NULL;
+DELETE FROM rooms WHERE @primary_admin IS NOT NULL;
+DELETE FROM subjects WHERE @primary_admin IS NOT NULL;
+DELETE FROM programs WHERE @primary_admin IS NOT NULL;
+DELETE FROM audit WHERE @primary_admin IS NOT NULL;
+DELETE FROM login_attempts WHERE @primary_admin IS NOT NULL;
+DELETE FROM employees WHERE @primary_admin IS NOT NULL;
+DELETE FROM teachers WHERE @primary_admin IS NOT NULL;
+DELETE FROM accounts WHERE @primary_admin IS NOT NULL;
+INSERT INTO accounts(name,opening_balance) SELECT 'Cash / صندوق',0 WHERE @primary_admin IS NOT NULL;
+DELETE FROM settings WHERE @primary_admin IS NOT NULL;
+INSERT INTO settings(name,value) SELECT 'center_name','مرکز آموزشی خاور دانش' WHERE @primary_admin IS NOT NULL;
+INSERT INTO settings(name,value) SELECT 'center_name_en','Khawar-Danish Educational Center' WHERE @primary_admin IS NOT NULL;
+INSERT INTO settings(name,value) SELECT 'address','' WHERE @primary_admin IS NOT NULL;
+INSERT INTO settings(name,value) SELECT 'phone','' WHERE @primary_admin IS NOT NULL;
+INSERT INTO settings(name,value) SELECT 'footer','' WHERE @primary_admin IS NOT NULL;
+INSERT INTO settings(name,value) SELECT 'closure_days','5' WHERE @primary_admin IS NOT NULL;
+INSERT INTO settings(name,value) SELECT 'low_attendance','75' WHERE @primary_admin IS NOT NULL;
+INSERT INTO settings(name,value) SELECT 'backup_retention','10' WHERE @primary_admin IS NOT NULL;
+DELETE FROM roles WHERE @primary_admin IS NOT NULL AND id<>1;
+UPDATE roles SET name='Administrator',permissions='["*"]' WHERE id=1 AND @primary_admin IS NOT NULL;
+INSERT INTO roles(id,name,permissions) SELECT 2,'Registrar','["students.view","students.create","students.update","academic.view","academic.create","academic.update","attendance.view","attendance.create","exams.view","exams.create","exams.update","print","export"]' WHERE @primary_admin IS NOT NULL;
+INSERT INTO roles(id,name,permissions) SELECT 3,'Accountant','["students.view","academic.view","finance.view","finance.create","finance.refund","finance.discount","payroll.view","payroll.create","print","export"]' WHERE @primary_admin IS NOT NULL;
+INSERT INTO roles(id,name,permissions) SELECT 4,'Teacher','["academic.view","attendance.view","attendance.create","exams.view","exams.create","print"]' WHERE @primary_admin IS NOT NULL;
+INSERT INTO roles(id,name,permissions) SELECT 5,'Read-only','["students.view","academic.view","attendance.view","exams.view","print"]' WHERE @primary_admin IS NOT NULL;
+COMMIT;
+SELECT @primary_admin AS preserved_admin_id,IF(@primary_admin IS NULL,'NO ACTIVE ADMIN: NO DATA CHANGED','RESET COMPLETE') AS result;
