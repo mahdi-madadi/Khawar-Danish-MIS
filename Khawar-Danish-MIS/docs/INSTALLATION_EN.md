@@ -54,3 +54,11 @@ For earlier schemas of this same project, run and test these additive upgrade sc
 MySQL DDL is not fully transactional. These scripts are not a migration for unrelated databases. An administrator must link legacy non-administrator login accounts to administrative employment records; teacher profiles are not the login source anymore. Restart Apache and verify login, records, photos, finance and backup.
 
 Do not run install, demo or reset for ordinary updates. Reset is deliberately destructive and documented separately. Backups are not automatically encrypted or scheduled. CLI ZIP restore has a 128 MiB uncompressed limit; preserve application/config files separately as well as database/photo backups.
+
+
+Schedule, attendance, student activity and teacher salary update (29 October 2026)
+
+Identical subject/time/room/date ranges display once with all teaching weekdays. Daily conflict validation is preserved. Monthly attendance and paper sheets show each weekday beside its day number.
+Issued completion and appreciation certificates also include English recognition text. Names retain their stored spelling.
+Dashboard active/inactive counts and expandable full lists are derived on every visit. Active means an administratively active student with an active enrollment in an active batch covering today; both enrollment and batch dates apply. Ended courses automatically cease qualifying; renewal in a current course restores activity. Payment alone does not establish activity. New students without a current enrollment and future-only enrollments are inactive for now.
+Teacher fixed salary uses agreed amount / 30 × covered calendar days, rounded to cents. A 3000 AFN amount yields 2800 for 28 days and 3100 for 31 days. Partial contracts count only covered days. Previously approved payroll remains unchanged. Payroll periods use Gregorian months. Administrative employee payroll is unchanged.

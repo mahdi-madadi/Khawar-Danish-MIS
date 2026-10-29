@@ -1,6 +1,13 @@
 <?php
 declare(strict_types=1);
 final class Domain {
+    public static function fixedSalary(int $amount,int $days): int {return intdiv($amount*$days+15,30);}
+    public static function groupedSchedule(array $rows): array {
+        $groups=[];
+        foreach($rows as $r){$key=json_encode(array_intersect_key($r,array_flip(['class_subject_id','room_id','start_time','end_time','start_date','end_date'])));if(!isset($groups[$key])){$groups[$key]=$r;$groups[$key]['weekdays']=[];}$groups[$key]['weekdays'][]=(int)$r['weekday'];}
+        foreach($groups as &$g){$g['weekdays']=array_values(array_unique($g['weekdays']));usort($g['weekdays'],fn($a,$b)=>(($a+1)%7)<=>(($b+1)%7));}unset($g);
+        return array_values($groups);
+    }
     public static function personCode(string $kind,int $id,string $date): string {
         $year=self::g2j(...array_map('intval',explode('-',substr($date,0,10))))[0];
         return (['students'=>'KDAS','teachers'=>'KDAT','employees'=>'KDAE'][$kind]).'-'.substr((string)$year,-2).'-'.str_pad((string)$id,6,'0',STR_PAD_LEFT);

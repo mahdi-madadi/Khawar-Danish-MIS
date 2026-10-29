@@ -32,7 +32,7 @@ function teachingGroupsPage(): void {
  $groups=q('SELECT b.*,p.name program FROM batches b JOIN programs p ON p.id=b.program_id'.$where.' ORDER BY b.id DESC LIMIT 20 OFFSET '.(($page-1)*20),$args)->fetchAll();
  foreach($groups as $group){$lessons=q('SELECT cs.id,s.name subject,t.name teacher FROM class_subjects cs JOIN subjects s ON s.id=cs.subject_id JOIN teachers t ON t.id=cs.teacher_id WHERE cs.batch_id=?',[$group['id']])->fetchAll();
   if(!$lessons)$lessons=[['id'=>0,'subject'=>'—','teacher'=>'—']];
-  foreach($lessons as $lesson){$times=[];foreach(q('SELECT tt.*,r.name room FROM timetable tt JOIN rooms r ON r.id=tt.room_id WHERE tt.class_subject_id=? ORDER BY tt.weekday,tt.start_time',[$lesson['id']]) as $tt)$times[]=t('day'.$tt['weekday']).' '.substr($tt['start_time'],0,5).'–'.substr($tt['end_time'],0,5).' / '.$tt['room'].' ('.fdate($tt['start_date']).'–'.fdate($tt['end_date']).')';
+  foreach($lessons as $lesson){$times=[];foreach(Domain::groupedSchedule(q('SELECT tt.*,r.name room FROM timetable tt JOIN rooms r ON r.id=tt.room_id WHERE tt.class_subject_id=? ORDER BY tt.start_time,tt.weekday',[$lesson['id']])->fetchAll()) as $tt)$times[]=implode('، ',array_map(fn($d)=>t('day'.$d),$tt['weekdays'])).' '.substr($tt['start_time'],0,5).'–'.substr($tt['end_time'],0,5).' / '.$tt['room'].' ('.fdate($tt['start_date']).'–'.fdate($tt['end_date']).')';
    $links=[];if(can('students.create'))$links[]=['new_enrollment','enrollments',['batch_id'=>$group['id']]];
    if(can('print')&&can('attendance.view')&&$lesson['id'])$links[]=['attendance_sheet','attendance_sheet',['class_subject_id'=>$lesson['id']]];
    if(can('academic.update'))$links[]=['edit','batches',['id'=>$group['id'],'edit'=>1]];

@@ -57,3 +57,11 @@ Read [docs/TESTING.md](docs/TESTING.md) before integration tests; they require d
 Download and open [Dari user handbook](docs/USER_GUIDE_DARI.html) and [administrator handbook](docs/ADMIN_GUIDE_DARI.html) locally. GitHub stores the source; GitHub Pages is static hosting and does not run this PHP/MySQL application.
 
 Application: [MIT](LICENSE). Fonts and third-party notices: [licenses/DEPENDENCIES.md](licenses/DEPENDENCIES.md).
+
+
+Schedule, attendance, student activity and teacher salary update (29 October 2026)
+
+Identical subject/time/room/date ranges display once with all teaching weekdays. Daily conflict validation is preserved. Monthly attendance and paper sheets show each weekday beside its day number.
+Issued completion and appreciation certificates also include English recognition text. Names retain their stored spelling.
+Dashboard active/inactive counts and expandable full lists are derived on every visit. Active means an administratively active student with an active enrollment in an active batch covering today; both enrollment and batch dates apply. Ended courses automatically cease qualifying; renewal in a current course restores activity. Payment alone does not establish activity. New students without a current enrollment and future-only enrollments are inactive for now.
+Teacher fixed salary uses agreed amount / 30 × covered calendar days, rounded to cents. A 3000 AFN amount yields 2800 for 28 days and 3100 for 31 days. Partial contracts count only covered days. Previously approved payroll remains unchanged. Payroll periods use Gregorian months. Administrative employee payroll is unchanged.

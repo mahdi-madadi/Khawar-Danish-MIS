@@ -1,0 +1,459 @@
+Act as a senior PHP software engineer, database designer, UI/UX designer, and software tester. Build a complete, practical, lightweight, offline Education Center Management Information System.
+
+I need working software that I can install and use, not merely a proposal, a dashboard mockup, isolated code snippets, or an unfinished demonstration.
+
+## 1. Project context and priorities
+
+This system is for a local educational center in Afghanistan. Its users have limited computer skills.
+
+The center provides:
+- Kankor university entrance preparation.
+- Foreign language courses, including English, Chinese, and German.
+- Literacy classes.
+- Calligraphy.
+- Core school subjects.
+- Other courses that administrators can define later.
+
+Different teachers teach different subjects, batches, and schedules.
+
+Prioritize:
+1. Correct and reliable daily operations.
+2. Ease of use for nontechnical staff.
+3. Fully offline operation.
+4. Low hardware and software requirements.
+5. Accurate financial records.
+6. Beautiful, consistent, professional design.
+7. Maintainable code and straightforward installation.
+
+Use “Khawar-Danish Educational Center” as an editable default name. Make the center’s name, logo, address, phone numbers, and document footer configurable.
+
+## 2. Technology and offline operation
+
+Use:
+- PHP with a simple, well-organized MVC-style architecture.
+- MySQL or MariaDB.
+- HTML5 and CSS3.
+- Bootstrap 5 with local RTL and LTR assets.
+- Vanilla JavaScript unless a small local library is clearly necessary.
+- PDO with prepared statements.
+
+Target a modest Windows computer running WAMP or XAMPP, approximately 4 GB RAM and an ordinary dual-core processor.
+
+Prefer plain PHP over a heavyweight framework for this project. Do not require Node.js, Docker, Redis, cloud services, or a development build server for installation or daily use.
+
+All fonts, icons, stylesheets, scripts, and dependencies must be bundled locally. Do not use CDNs, remote fonts, external APIs, telemetry, or online authentication.
+
+The installed system must function without any internet connection, including printing, reports, authentication, and backup. Explain honestly that the initial acquisition of WAMP/XAMPP or other prerequisites may require a separate download.
+
+Support localhost operation and optional use across a trusted local network. Structure the application so future online deployment is possible without requiring cloud infrastructure now.
+
+## 3. Language and localization
+
+The default interface must be Dari/Persian with proper RTL layout. Provide English as a secondary language with LTR layout.
+
+Use centralized translation dictionaries. Translate navigation, forms, validation errors, notifications, reports, and printable documents. Do not scatter untranslated text throughout the code.
+
+Use a readable, locally bundled font that supports Persian/Dari characters and include its license.
+
+Requirements:
+- UTF-8 throughout and utf8mb4 in the database.
+- Correct rendering of mixed Persian text, English text, phone numbers, and student identifiers.
+- Afghanistan timezone: Asia/Kabul.
+- Default currency: AFN.
+- Gregorian date storage with Solar Hijri/Shamsi display and input support.
+- Validated date conversion with a clearly labeled calendar mode.
+- Monthly attendance sheets must use the actual number of days in the selected calendar month.
+- Accept Persian and Latin digits in relevant numeric inputs and normalize them safely.
+
+## 4. Users, permissions, and security
+
+Provide one initial administrator account with full access. The administrator must be able to create, edit, deactivate, and manage additional users.
+
+Provide configurable roles and permissions, with sensible defaults such as:
+- Administrator.
+- Registrar.
+- Accountant.
+- Teacher or attendance operator.
+- Read-only user.
+
+Permissions must control actions such as viewing, creating, updating, deleting, printing, exporting, managing finances, and accessing settings.
+
+Enforce permissions on the server for every protected route and action, not only by hiding interface buttons. Limit teacher access to assigned classes where applicable.
+
+Implement:
+- Secure password hashing using PHP password_hash and password_verify.
+- Secure session handling and session regeneration after login.
+- Configurable inactivity timeout with a warning where practical.
+- CSRF protection.
+- Output escaping and input validation.
+- Login attempt throttling.
+- Safe file-upload validation.
+- Protection against direct access to configuration, backups, and private uploaded files.
+- Prevention of deactivating or deleting the last active administrator.
+
+Provide offline password recovery through administrator-assisted reset. For the sole administrator, provide a documented local recovery procedure that requires access to the server computer. Do not use an email-dependent reset flow or a permanent backdoor password.
+
+## 5. Academic structure
+
+Clearly distinguish:
+- Course or program: English, Kankor, literacy, etc.
+- Subject: mathematics, physics, grammar, etc.
+- Batch/class: a particular running group with dates and capacity.
+- Class subject: a subject offered within a batch, assigned to a teacher.
+- Enrollment: a student’s participation in a batch and its relevant subjects.
+
+Support:
+- Programs containing multiple subjects.
+- Single-subject classes.
+- Different levels and terms.
+- Multiple batches of the same program.
+- Students attending more than one program.
+- Teacher assignments by batch and subject.
+- Start/end dates, capacities, status, room, and schedule.
+- Required and optional subjects where appropriate.
+
+Avoid duplicate tuition charges when a program contains multiple subjects. Define whether fees are charged at the program enrollment level or for separately priced subject enrollments.
+
+## 6. Student management
+
+Include:
+- Unique, automatically generated student IDs.
+- Full name and father’s name.
+- Optional date of birth or age.
+- Optional gender and identity-document details.
+- Phone number and address.
+- Guardian name, relationship, and contact information.
+- Optional photograph.
+- Registration date and status.
+- Notes.
+
+Provide:
+- Search, filters, pagination, and duplicate-registration warnings.
+- Student profile showing enrollments, attendance, assessments, fees, payments, discounts, and outstanding balances.
+- Enrollment, withdrawal, completion, and transfer workflows.
+- Preservation of historical records when a student changes classes.
+- Printable student ID card.
+- Archiving instead of destructive deletion when records are linked to transactions.
+
+Collect only necessary personal data and keep sensitive information restricted.
+
+## 7. Teacher management
+
+Include:
+- Teacher profile and contact information.
+- Qualifications and teaching subjects.
+- Employment status and joining date.
+- Assigned classes and schedules.
+- Compensation agreements and payment history.
+- Optional teacher attendance.
+
+Support these compensation models:
+1. Fixed monthly salary.
+2. Percentage of eligible tuition actually collected.
+3. Fixed salary plus a percentage.
+
+Define percentage compensation precisely:
+- Specify which classes and subjects are eligible.
+- Exclude registration fees and unrelated income by default.
+- Define treatment of discounts, refunds, and shared teaching assignments.
+- Allocate receipts consistently when payments cover multiple charges.
+- Prevent the same receipt allocation from being counted twice.
+- Make agreement changes effective-dated so they do not rewrite historical payroll.
+- Separate calculated earnings, approved payroll, amounts paid, and outstanding payable balances.
+- Snapshot approved payroll calculations.
+- Handle later refunds through traceable adjustments instead of silently modifying closed payroll.
+
+Show administrators a clear explanation of each payroll calculation.
+
+## 8. Timetable and rooms
+
+Provide daily and weekly timetables with:
+- Program, batch, subject, teacher, room, weekday, and start/end time.
+- Printable views.
+- Teacher and room filters.
+- Configurable holidays and weekly closure days.
+
+Detect overlapping teacher, room, and batch bookings, considering the dates during which classes run. Allow adjacent sessions where one ends exactly when another begins.
+
+## 9. Attendance
+
+Provide attendance by batch, subject, and date.
+
+Support:
+- Present.
+- Absent.
+- Late.
+- Excused.
+
+Make attendance entry fast with bulk actions and editable corrections. Prevent duplicate records for the same student and session.
+
+Include attendance summaries and configurable low-attendance alerts.
+
+Generate a printable monthly attendance register for each batch/subject containing:
+- Center name and logo.
+- Program, batch, subject, and teacher.
+- Selected month and year.
+- Student IDs and names.
+- Correct daily columns.
+- Clearly marked holidays or nonscheduled days.
+- Attendance totals and signature areas.
+
+Respect enrollment and withdrawal dates so historical attendance lists remain accurate.
+
+## 10. Exams, results, and certificates
+
+Include:
+- Assessments and final examinations.
+- Configurable maximum marks, pass marks, and optional weighting.
+- Subject-level marks entry.
+- Validation against impossible or duplicate marks.
+- Absence and exemption statuses where relevant.
+- Final results and pass/fail status.
+- Optional ranking with a defined tie policy.
+- Printable class results and individual report cards.
+
+Provide printable:
+- Completion certificates.
+- Appreciation certificates.
+- Student result sheets.
+
+Use configurable templates with student name, course, dates, result, certificate number, center branding, and signature/stamp areas.
+
+Maintain an issuance register with unique certificate numbers, reprint history, and revocation status. Any verification feature must work locally and must not imply public online verification.
+
+## 11. Finance and accounting workflows
+
+Use AFN by default and DECIMAL database fields for money.
+
+Include:
+- Program or class fee structures.
+- Registration and tuition charges.
+- Monthly or course-based fees.
+- Installments and due dates.
+- Partial payments and advance payments.
+- Scholarships and authorized discounts.
+- Student balances and overdue accounts.
+- Numbered receipts.
+- Refunds and cancellations with reasons.
+- Other income.
+- Expense categories.
+- Teacher payroll and payments.
+- Other staff salary expenses.
+- Cash and optional bank accounts.
+- Opening balances and cash/bank reconciliation.
+
+Keep fee charges, payments, allocations, credits, and refunds as separate traceable records.
+
+Critical accounting rules:
+- A charge is not automatically a cash receipt.
+- An unpaid teacher earning is not automatically a cash expense.
+- Transfers between the center’s accounts are not income or expenses.
+- Teacher payments must not be counted twice through both payroll and general expenses.
+- Historical financial transactions must not be silently overwritten or deleted.
+- Use reversals or corrective transactions with an audit trail.
+- Protect multi-step financial writes with database transactions.
+- Prevent duplicate payment submissions.
+- Clearly define and consistently apply rounding.
+
+Provide:
+- Income and expense reports.
+- Student receivables.
+- Teacher payables.
+- Collection reports by class and period.
+- Cash/bank movement reports.
+- A clearly labeled cash-basis surplus/deficit report.
+
+Do not label cash balance as profit. If an accrual profit/loss report is implemented, document its recognition rules and keep it distinct from cash flow.
+
+Include understandable examples in the user guide explaining balances, discounts, refunds, and payroll percentages.
+
+## 12. Dashboard, alerts, and audit logs
+
+Create a useful, uncluttered dashboard with:
+- Active students, teachers, and classes.
+- Today’s timetable.
+- Collections and expenses for a selected period.
+- Outstanding student fees.
+- Unpaid approved teacher payroll.
+- Upcoming exams and ending classes.
+- Low-attendance alerts.
+- Backup reminders.
+
+Dashboard figures must come from real database records and respect user permissions.
+
+Provide offline in-app notifications. Do not make SMS, email, or external messaging a required dependency.
+
+Maintain administrator-visible audit logs for:
+- Login events.
+- User and permission changes.
+- Student and enrollment changes.
+- Financial transactions, reversals, and discounts.
+- Payroll approval and payment.
+- Settings changes.
+- Backup and restore actions.
+
+Record actor, action, affected record, and timestamp. Include safe before/after details where useful, but never log passwords, session tokens, or other secrets.
+
+## 13. Printable forms and reports
+
+Provide polished A4 print layouts for:
+- Student registration.
+- Parent/guardian consent.
+- Enrollment confirmation.
+- Student ID cards.
+- Monthly attendance registers.
+- Teacher attendance where implemented.
+- Payment receipts.
+- Student account statements.
+- Teacher salary statements.
+- Exam result sheets.
+- Certificates and appreciation letters.
+- Timetables.
+- Financial reports.
+
+Use locally available browser printing and “Save as PDF” as the baseline. Bundle any optional PDF library locally and verify its RTL support.
+
+Requirements:
+- Correct RTL text and mixed-language rendering.
+- Clear margins and page breaks.
+- Repeated table headers on multipage reports.
+- No navigation menus or action buttons in printed output.
+- Landscape layout where needed for attendance.
+- Signature and stamp spaces where appropriate.
+- Readable black-and-white output.
+- No clipped columns or overlapping text.
+
+Provide CSV export for suitable reports with Persian-compatible encoding and protection against spreadsheet formula injection.
+
+## 14. Design and usability
+
+Create a polished, cohesive interface, not a generic unfinished admin template.
+
+Use:
+- A restrained color palette.
+- Clear typography.
+- Consistent spacing and alignment.
+- A clean sidebar and top navigation.
+- Accessible contrast and visible keyboard focus.
+- Responsive layouts for ordinary laptops and desktops.
+- Clear labels, helpful validation, and meaningful empty states.
+- Searchable selectors for large student/class lists.
+- Pagination for large tables.
+- Confirmation dialogs for sensitive actions.
+
+Prioritize frequent tasks:
+- Register a student.
+- Enroll a student.
+- Collect a payment and print a receipt.
+- Record attendance.
+- Record an expense.
+- Calculate and pay teacher compensation.
+- Print a class register.
+
+Avoid technical jargon in the user interface. Show friendly errors to users and save diagnostic details in protected application logs.
+
+## 15. Backup, restore, and maintenance
+
+Implement:
+- Administrator-only backup.
+- Backup of the database and necessary uploaded files.
+- Timestamped backup filenames.
+- Backup reminders and configurable retention.
+- A documented restore procedure.
+- Validation before restore.
+- Explicit confirmation before replacing existing data.
+- A pre-restore backup.
+- Protection against unauthorized backup download.
+
+Do not promise scheduled backups unless an actual offline scheduling mechanism is implemented and documented.
+
+Provide a safe schema-versioning or migration approach. Updates must preserve existing data.
+
+## 16. Implementation quality
+
+Use:
+- A documented folder structure.
+- Reusable layouts and form components.
+- Centralized configuration, permissions, translations, and validation.
+- Appropriate indexes, foreign keys, and uniqueness constraints.
+- Referential integrity and safe archival behavior.
+- Server-side validation even when JavaScript validation exists.
+- Efficient queries and pagination.
+- A separate, optional demo dataset.
+
+Avoid:
+- Placeholder pages presented as completed features.
+- Nonfunctional buttons.
+- Hardcoded dashboard values.
+- SQL injection vulnerabilities.
+- Hardcoded production passwords.
+- Publicly accessible backup or configuration files.
+- Remote dependencies.
+- Unexplained financial calculations.
+- Unnecessary architectural complexity.
+
+## 17. Testing and acceptance criteria
+
+Test the application with a realistic demo scenario:
+1. Create a program, subjects, teachers, rooms, and a batch.
+2. Register and enroll students.
+3. Create a timetable and verify conflict detection.
+4. Record attendance and print the correct monthly register.
+5. Create fees, apply an authorized discount, and collect partial payments.
+6. Confirm outstanding balances and receipt numbering.
+7. Calculate fixed and percentage-based teacher payroll.
+8. Verify that repeated calculations do not duplicate earnings or payments.
+9. Process a refund and verify its accounting and payroll effects.
+10. Record expenses and check financial totals.
+11. Enter exam marks and print results and certificates.
+12. Confirm restricted users cannot access unauthorized routes directly.
+13. Switch between Dari and English.
+14. Verify printed RTL layouts.
+15. Back up and restore a test installation.
+16. Verify operation with internet access disabled.
+
+Include meaningful automated tests for financial calculations, permissions, duplicate-payment protection, date conversion, and timetable overlap logic where feasible.
+
+Report exactly which checks were executed and which could not be executed in your environment. Do not claim successful testing without evidence.
+
+## 18. Deliverables
+
+Deliver:
+1. A complete downloadable ZIP containing the working project.
+2. Database schema and migrations or an installation SQL file.
+3. An optional demo-data file that contains no real personal information.
+4. All required local assets and dependencies.
+5. A clear README in Dari and English.
+6. Step-by-step Windows installation instructions for WAMP/XAMPP.
+7. Secure first-run administrator setup.
+8. A concise daily-use guide for nontechnical staff.
+9. Backup, restore, update, and troubleshooting instructions.
+10. A role/permission matrix.
+11. A database relationship overview.
+12. Test results and an honest list of remaining limitations.
+13. Dependency and asset license information.
+
+The README must explain how to:
+- Start the required local services.
+- Configure and import the database or run the installer.
+- Open the application in the browser.
+- Create the first administrator.
+- Configure center branding.
+- Add teachers, programs, subjects, and batches.
+- Register students and collect fees.
+- Record attendance and examinations.
+- Calculate and pay salaries.
+- Print documents.
+- Back up and restore data.
+
+## 19. Working method
+
+Begin with a concise architecture summary, essential assumptions, and a module checklist. Then proceed to implementation in the same task.
+
+Make reasonable decisions without repeatedly asking for confirmation. Ask only when a missing decision would materially affect data integrity or the requested scope.
+
+If an existing project ZIP is attached, inspect it first, reuse suitable components, identify defects, and preserve existing data through documented migrations. Do not replace a usable project blindly.
+
+Work in manageable implementation stages while maintaining a functioning integrated application. If environment limits prevent finishing in one turn, preserve completed files and clearly state the remaining work. Do not substitute a plan for the requested software or claim completion prematurely.
+
+The final response should provide the downloadable project, short installation instructions, test status, and any important limitations.

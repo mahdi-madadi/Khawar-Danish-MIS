@@ -1,5 +1,10 @@
 <?php
 return [
+ 'active_students'=>['Active students','شاگردان فعال'],
+ 'inactive_students'=>['Inactive students','شاگردان غیر فعال'],
+ 'show_list'=>['Show list','نمایش فهرست'],
+ 'student_activity_hint'=>['Activity is calculated automatically from a current active enrollment. After the last course ends, the student becomes inactive until renewed.','وضعیت به صورت خودکار از ثبت‌نام معتبر امروز محاسبه می‌شود. پس از ختم آخرین دوره، شاگرد تا ثبت‌نام مجدد غیر فعال است.'],
+ 'salary_30_day_hint'=>['Fixed salary = agreed amount / 30 × covered calendar days.','معاش ثابت = مبلغ قرارداد ÷ ۳۰ × روزهای تحت پوشش قرارداد در ماه.'],
  'employees'=>["Administrative employees", "کارمندان اداری"],
  'employee'=>["Employee", "کارمند اداری"],
  'employee_id'=>["Administrative employee", "کارمند اداری"],

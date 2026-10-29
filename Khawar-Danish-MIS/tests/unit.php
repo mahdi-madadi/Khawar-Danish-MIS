@@ -12,4 +12,12 @@ check(Domain::personCode('students',123,'2026-10-28'),'KDAS-05-000123','student 
 check(Domain::personCode('teachers',999999,'2026-03-20'),'KDAT-04-999999','teacher identity before Nowruz');
 check(Domain::personCode('teachers',1000000,'2026-03-21'),'KDAT-05-1000000','identity expands without truncation');
 check(Domain::personCode('employees',12,'2026-10-28'),'KDAE-05-000012','administrative employee identity');
+check(Domain::fixedSalary(300000,28),280000,'28 days on 30-day salary basis');
+check(Domain::fixedSalary(300000,30),300000,'30 days salary');
+check(Domain::fixedSalary(300000,31),310000,'31 days salary');
+check(Domain::fixedSalary(300000,15),150000,'partial salary');
+$slot=['class_subject_id'=>1,'room_id'=>1,'start_time'=>'08:00','end_time'=>'09:00','start_date'=>'2026-01-01','end_date'=>'2026-03-01'];
+$grouped=Domain::groupedSchedule([array_merge($slot,['weekday'=>0]),array_merge($slot,['weekday'=>6]),array_merge($slot,['weekday'=>2])]);
+check(count($grouped),1,'same slot grouped');check($grouped[0]['weekdays'],[6,0,2],'Saturday-first days');
+check(count(Domain::groupedSchedule([array_merge($slot,['weekday'=>0]),array_merge($slot,['weekday'=>1,'room_id'=>2])])),2,'different rooms kept separate');
 echo "ALL $passed CHECKS PASSED\n";
