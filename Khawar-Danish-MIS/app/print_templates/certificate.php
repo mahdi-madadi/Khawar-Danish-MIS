@@ -1,8 +1,8 @@
 <?php ?>
 <section class="bilingual-certificate print-document">
         <div class="certificate-side certificate-fa" dir="rtl">
-            <img class="cert-watermark kda-watermark" src="assets/kda-logo.svg?v=1" alt="" aria-hidden="true" width="130" height="130">
-            <img class="cert-logo kda-document-logo" src="assets/kda-logo.svg?v=1" alt="KDA" width="62" height="62">
+            <img class="cert-watermark kda-watermark" src="assets/kda-logo-book-20261031.png" alt="" aria-hidden="true" width="130" height="130">
+            <img class="cert-logo kda-document-logo" src="assets/kda-logo-book-20261031.png" alt="KDA" width="62" height="62">
             <div class="cert-brand"><?= e(setting('center_name')) ?></div>
             <div class="cert-subbrand">سیستم مدیریت آموزشی</div>
             <div class="cert-line"></div>
@@ -24,8 +24,8 @@
         <div class="certificate-divider"></div>
 
         <div class="certificate-side certificate-en" dir="ltr">
-            <img class="cert-watermark kda-watermark" src="assets/kda-logo.svg?v=1" alt="" aria-hidden="true" width="130" height="130">
-            <img class="cert-logo kda-document-logo" src="assets/kda-logo.svg?v=1" alt="KDA" width="62" height="62">
+            <img class="cert-watermark kda-watermark" src="assets/kda-logo-book-20261031.png" alt="" aria-hidden="true" width="130" height="130">
+            <img class="cert-logo kda-document-logo" src="assets/kda-logo-book-20261031.png" alt="KDA" width="62" height="62">
             <div class="cert-brand"><?= e(setting('center_name_en')) ?></div>
             <div class="cert-subbrand">Educational Management Center</div>
             <div class="cert-line"></div>

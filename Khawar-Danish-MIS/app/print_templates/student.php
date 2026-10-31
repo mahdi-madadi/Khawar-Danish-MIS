@@ -1,7 +1,7 @@
 <?php ?>
 <section class="official-sheet student-static-sheet print-document">
         <div class="static-form-brand">
-            <img class="static-kda-logo" src="assets/kda-logo.svg?v=1" alt="KDA" width="66" height="66">
+            <img class="static-kda-logo" src="assets/kda-logo-book-20261031.png" alt="KDA" width="66" height="66">
             <div>
                 <h1><?= e(setting('center_name')) ?></h1>
                 <p>سیستم مدیریت آموزشی</p>

@@ -38,7 +38,7 @@ function attendanceSheetPage(): void {
  echo '<div class="toolbar no-print"><button type="button" data-print>'.e(t('save_attendance_pdf')).'</button><span>'.e(t('pdf_hint')).'</span></div>';
  $pages=array_chunk($roster,20);if(!$pages)$pages=[[]];
  foreach($pages as $page=>$students){
-  echo '<article class="paper-attendance"><header><img class="paper-brand kda-document-logo" src="assets/kda-logo.svg?v=1" alt="KDA" width="62" height="62"><div><h1>'.e(setting(lang()==='en'?'center_name_en':'center_name')).'</h1><p>'.e(setting('address').' · '.setting('phone')).'</p></div><div><h2>'.e(t('attendance_sheet')).'</h2><bdi>'.e($month).'</bdi></div></header><div class="paper-facts">';
+  echo '<article class="paper-attendance"><header><img class="paper-brand kda-document-logo" src="assets/kda-logo-book-20261031.png" alt="KDA" width="62" height="62"><div><h1>'.e(setting(lang()==='en'?'center_name_en':'center_name')).'</h1><p>'.e(setting('address').' · '.setting('phone')).'</p></div><div><h2>'.e(t('attendance_sheet')).'</h2><bdi>'.e($month).'</bdi></div></header><div class="paper-facts">';
   foreach(['batches'=>$cs['batch_name'],'subjects'=>$cs['subject_name'],'teachers'=>$cs['teacher_name'],'time_slot'=>$slot,'rooms'=>implode(' / ',array_unique(array_column($schedule,'room')))] as $label=>$value)echo '<span><strong>'.e(t($label)).': </strong>'.e($value).'</span>';
   echo '</div><div class="table-wrap"><table><thead><tr><th>#</th><th class="paper-name">'.e(t('name')).'</th><th class="paper-father">'.e(t('father_name')).'</th>';
   foreach($days as $d)echo '<th class="paper-day'.(!$scheduled($d)?' paper-off':'').'">'.e(substr(fdate($d),8,2)).'<br><span class="attendance-weekday">'.e(t('day'.date('w',strtotime($d)))).'</span></th>';
