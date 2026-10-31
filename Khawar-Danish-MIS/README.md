@@ -1,6 +1,6 @@
 <div dir="rtl">
 
-<p align="center"><img src="public/assets/kda-logo.svg" width="96" alt="KDA"></p>
+<p align="center"><img src="public/assets/kda-logo-book-20261031.png" width="96" alt="KDA"></p>
 
 # خاور دانش — سیستم مدیریت مرکز آموزشی
 
